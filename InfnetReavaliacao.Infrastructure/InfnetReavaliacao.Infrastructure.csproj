@@ -10,4 +10,8 @@
     <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InfnetReavaliacao.Core\InfnetReavaliacao.Core.csproj" />
+  </ItemGroup>
+
 </Project>

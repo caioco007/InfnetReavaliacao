@@ -1,4 +1,13 @@
+using InfnetReavaliacao.Application.Services.Implementations;
+using InfnetReavaliacao.Application.Services.Interfaces;
+using InfnetReavaliacao.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<InfnetReavaliacaoDbContext>();
+
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 // Add services to the container.
 
