@@ -10,8 +10,9 @@ namespace InfnetReavaliacao.Application.Services.Interfaces
 {
     public interface IBookService
     {
-        List<BookViewModel> GetAll(string query);
-        BookDetailsViewModel GetById(int id);
+        List<BookViewModel> GetAll();
+        BookViewModel GetById(int id);
+        BookDetailsViewModel GetDetailsById(int id);
         int Create(NewBookInputModel inputModel);
         void Update(UpdateBookInputModel inputModel);
         void Delete(int id);

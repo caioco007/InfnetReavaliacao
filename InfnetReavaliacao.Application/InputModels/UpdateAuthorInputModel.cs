@@ -8,9 +8,9 @@ namespace InfnetReavaliacao.Application.InputModels
 {
     public class UpdateAuthorInputModel
     {
-        public int Id { get; private set; }
-        public string FullName { get; private set; }
-        public DateTime BirthDate { get; private set; }
-        public string Country { get; private set; }
+        public int Id { get; set; }
+        public string FullName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string Country { get; set; }
     }
 }

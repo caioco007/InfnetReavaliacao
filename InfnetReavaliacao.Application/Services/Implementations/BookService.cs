@@ -2,62 +2,73 @@
 using InfnetReavaliacao.Application.Services.Interfaces;
 using InfnetReavaliacao.Application.ViewModels;
 using InfnetReavaliacao.Core.Entities;
+using InfnetReavaliacao.Core.Repositories;
 using InfnetReavaliacao.Infrastructure.Persistence;
+using InfnetReavaliacao.Infrastructure.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace InfnetReavaliacao.Application.Services.Implementations
 {
     public class BookService : IBookService
     {
-        private readonly InfnetReavaliacaoDbContext _dbContext;
-        public BookService(InfnetReavaliacaoDbContext dbContext) 
-        { 
-            _dbContext = dbContext;
+        private readonly IBookRepository _bookRepository;
+        public BookService(IBookRepository bookRepository) 
+        {
+            _bookRepository = bookRepository;
         }
 
         public int Create(NewBookInputModel inputModel)
         {
-            var book = new Book(inputModel.Title, inputModel.Description, inputModel.IdAuthor);
+            var idBook = _bookRepository.GeneratedId();
+            var book = new Book(idBook, inputModel.Title, inputModel.Description, inputModel.IdAuthor);
 
-            _dbContext.Books.Add(book);
+            _bookRepository.Create(book);
 
             return book.Id;
         }
 
         public void Delete(int id)
         {
-            var book = _dbContext.Books.SingleOrDefault(b => b.Id == id);
+            var book = _bookRepository.GetById(id);
 
             book.Cancel();
         }
 
-        public List<BookViewModel> GetAll(string query)
+        public List<BookViewModel> GetAll()
         {
-            var books = _dbContext.Books;
+            var books = _bookRepository.GetAll();
 
-            var booksViewModel = books.Select(b => new BookViewModel(b.Id, b.Title, b.CreatedAt)).ToList();
+            var booksViewModel = books.Where(b => !b.IsDeleted).Select(b => new BookViewModel(b.Id, b.Title, b.CreatedAt)).ToList();
 
             return booksViewModel;
         }
 
-        public BookDetailsViewModel GetById(int id)
+        public BookViewModel GetById(int id)
         {
-            var book = _dbContext.Books.SingleOrDefault(b => b.Id == id);
+            var book = _bookRepository.GetById(id);
             if (book == null) return null;
-            
-            var author = _dbContext.Authors.SingleOrDefault(a => a.Id == book.IdAuthor);
-            if (author == null) return null;
+
+            var booksViewModel = new BookViewModel(book.Id, book.Title, book.CreatedAt);
+
+            return booksViewModel;
+        }
+
+        public BookDetailsViewModel GetDetailsById(int id)
+        {
+            var book = _bookRepository.GetById(id);
+            if (book == null) return null;
 
             var booksDetailsViewModel = new BookDetailsViewModel(
                 book.Id,
                 book.Title,
                 book.Description,
                 book.CreatedAt,
-                author.FullName
+                book.IdAuthor
                 );
 
             return booksDetailsViewModel;
@@ -65,7 +76,7 @@ namespace InfnetReavaliacao.Application.Services.Implementations
 
         public void Update(UpdateBookInputModel inputModel)
         {
-            var book = _dbContext.Books.SingleOrDefault(b => b.Id == inputModel.Id);
+            var book = _bookRepository.GetById(inputModel.Id);
 
             book.Update(inputModel.Title, inputModel.Description);
         }

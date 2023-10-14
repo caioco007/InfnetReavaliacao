@@ -10,7 +10,7 @@ namespace InfnetReavaliacao.Application.Services.Interfaces
 {
     public interface IAuthorService
     {
-        List<AuthorViewModel> GetAll(string query);
+        List<AuthorViewModel> GetAll();
         AuthorDetailsViewModel GetById(int id);
         int Create(NewAuthorInputModel inputModel);
         void Update(UpdateAuthorInputModel inputModel);

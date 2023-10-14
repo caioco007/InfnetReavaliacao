@@ -8,7 +8,7 @@ namespace InfnetReavaliacao.Core.Entities
 {
     public class Author : BaseEntity
     {
-        public Author(string fullName, DateTime birthDate, string country)
+        public Author(int id, string fullName, DateTime birthDate, string country) : base(id)
         {
             FullName = fullName;
             BirthDate = birthDate;

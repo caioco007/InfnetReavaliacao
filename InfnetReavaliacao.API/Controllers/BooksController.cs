@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InfnetReavaliacao.API.Controllers
 {
     [Route("api/books")]
+    [ApiController]
     public class BooksController : ControllerBase
     {
         private readonly IBookService _bookService;
@@ -16,16 +17,16 @@ namespace InfnetReavaliacao.API.Controllers
 
         // api/books?query=net core
         [HttpGet]
-        public IActionResult Get(string query)
+        public ActionResult Get()
         {
-            var books = _bookService.GetAll(query);
+            var books = _bookService.GetAll();
 
             return Ok(books);
         }
 
         // api/books/2
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public ActionResult GetById(int id)
         {
             var book = _bookService.GetById(id);
 
@@ -34,11 +35,11 @@ namespace InfnetReavaliacao.API.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(book);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] NewBookInputModel inputModel)
+        public ActionResult Post([FromBody] NewBookInputModel inputModel)
         {
             if (inputModel.Title.Length > 50)
             {
@@ -52,7 +53,7 @@ namespace InfnetReavaliacao.API.Controllers
 
         // api/books/2
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UpdateBookInputModel inputModel)
+        public ActionResult Put(int id, [FromBody] UpdateBookInputModel inputModel)
         {
             if (inputModel.Description.Length > 200)
             {
@@ -66,7 +67,7 @@ namespace InfnetReavaliacao.API.Controllers
 
         // api/books/3 DELETE
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
             _bookService.Delete(id);
 

@@ -8,7 +8,7 @@ namespace InfnetReavaliacao.Core.Entities
 {
     public class Book : BaseEntity
     {
-        public Book(string title, string description, int idAuthor)
+        public Book(int id, string title, string description, int idAuthor) : base(id)
         {
             Title = title;
             Description = description;

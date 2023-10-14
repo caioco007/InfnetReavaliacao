@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InfnetReavaliacao.API.Controllers
 {
     [Route("api/authors")]
+    [ApiController]
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorService _authorService;
@@ -16,16 +17,16 @@ namespace InfnetReavaliacao.API.Controllers
 
         // api/authors?query=net core
         [HttpGet]
-        public IActionResult Get(string query)
+        public ActionResult Get()
         {
-            var authors = _authorService.GetAll(query);
+            var authors = _authorService.GetAll();
 
             return Ok(authors);
         }
 
         // api/authors/2
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public ActionResult GetById(int id)
         {
             var author = _authorService.GetById(id);
 
@@ -34,13 +35,13 @@ namespace InfnetReavaliacao.API.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(author);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] NewAuthorInputModel inputModel)
+        public ActionResult Post([FromBody] NewAuthorInputModel inputModel)
         {
-            if (inputModel.FullName.Length > 50)
+            if (inputModel.FullName.Length < 10)
             {
                 return BadRequest();
             }
@@ -52,9 +53,9 @@ namespace InfnetReavaliacao.API.Controllers
 
         // api/authors/2
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UpdateAuthorInputModel inputModel)
+        public ActionResult Put(int id, [FromBody] UpdateAuthorInputModel inputModel)
         {
-            if (inputModel.FullName.Length > 50)
+            if (inputModel.FullName.Length < 10)
             {
                 return BadRequest();
             }
@@ -66,7 +67,7 @@ namespace InfnetReavaliacao.API.Controllers
 
         // api/authors/3 DELETE
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
             _authorService.Delete(id);
 

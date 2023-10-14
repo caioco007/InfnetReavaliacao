@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InfnetReavaliacao.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace InfnetReavaliacao.Core.Repositories
 {
     public interface IBookRepository
     {
+        List<Book> GetAll();
+        Book GetById(int id);
+        int Create(Book book);
+        int GeneratedId();
     }
 }

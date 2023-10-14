@@ -8,8 +8,8 @@ namespace InfnetReavaliacao.Application.InputModels
 {
     public class NewBookInputModel
     {
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public int IdAuthor { get; private set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int IdAuthor { get; set; }
     }
 }
