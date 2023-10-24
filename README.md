@@ -29,3 +29,7 @@ Liskov (Liskov Substitution Principle): Subtipos devem ser substituíveis por se
 Segregação de Interfaces (Interface Segregation Principle): Uma classe não deve ser forçada a implementar interfaces que não usa. A interface de uma classe deve ser específica para as necessidades dessa classe.
 
 Inversão de Dependência (Dependency Inversion Principle): Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações. Além disso, detalhes devem depender de abstrações, não o contrário.
+
+
+## Link do repositório no GIT:
+https://github.com/caioco007/InfnetReavaliacao
